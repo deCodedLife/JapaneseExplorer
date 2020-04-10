@@ -1,20 +1,107 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import '../Data/UserDB.dart';
+import '../Data/UserDB.dart' as DB;
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 
-class WordsPage extends StatelessWidget {
-  final Topic topic;
-  WordsPage({
+bool block = false;
+bool deny = false;
+
+class Data {
+  final List<DB.Word> words;
+  final DB.WordDao wordsDao;
+  final DB.Topic topic;
+  Data(this.words, this.wordsDao, this.topic);
+}
+
+class WordsView extends StatefulWidget {
+  final DB.Topic topic;
+  WordsView({
     Key key,
     @required this.topic,
   }) : super(key: key);
   @override
+  _WordsViewState createState() => _WordsViewState();
+}
+
+class _WordsViewState extends State<WordsView> {
+  List<DB.Word> words = List<DB.Word>();
+  DB.WordDao wordsDao;
+
+  @override
+  void initState() {
+    super.initState();
+    Future.delayed(Duration(seconds: 5), () {
+      Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(
+            builder: (context) => MainView(
+              allData: Data(words, wordsDao, widget.topic),
+            ),
+          ));
+    });
+  }
+
+  @override
   Widget build(BuildContext context) {
+    final wordDao = Provider.of<DB.WordDao>(context);
+    load(wordDao);
     return Scaffold(
       appBar: AppBar(
-        title: Text('Words of ' + topic.name),
+        title: Text('Loading words'),
       ),
-      body: WordsPageView(topic: topic),
+      body: Center(
+        child: SpinKitRing(
+          color: Colors.purpleAccent,
+          size: 50.0,
+        ),
+      ),
+    );
+  }
+
+  void load(DB.WordDao wordDao) async {
+    if (words.length == 0 && !block) {
+      var _words = wordDao.getByTopic(widget.topic.id);
+      _words.then((req) => setState(() {
+            wordsDao = wordDao;
+            words = req;
+            if (req.length == 0 || req.length == 1) block = true;
+          }));
+    }
+  }
+}
+
+class MainView extends StatefulWidget {
+  final Data allData;
+  MainView({
+    Key key,
+    @required this.allData,
+  }) : super(key: key);
+  @override
+  @override
+  _MainViewState createState() => _MainViewState();
+}
+
+class _MainViewState extends State<MainView> {
+  List<String> temp = List<String>();
+
+  @override
+  Widget build(BuildContext context) {
+    setState(() {
+      for (int i = 0; i < widget.allData.words.length; i++)
+        temp.add(widget.allData.words.elementAt(i).word);
+    });
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Words of ' + widget.allData.topic.name),
+      ),
+      body: Container(
+        child: GridView.builder(
+            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: Orientation == Orientation.portrait ? 3 : 2),
+            itemCount: temp.length,
+            itemBuilder: (BuildContext context, int index) =>
+                buildCard(context, index)),
+      ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {},
         tooltip: 'Add card',
@@ -22,53 +109,9 @@ class WordsPage extends StatelessWidget {
       ),
     );
   }
-}
 
-class WordsPageView extends StatefulWidget {
-  final Topic topic;
-  WordsPageView({
-    Key key,
-    @required this.topic,
-  }) : super(key: key);
-  @override
-  _WordsPageState createState() => _WordsPageState();
-}
-
-class _WordsPageState extends State<WordsPageView> {
-  List<Word> words = List<Word>();
-  List<String> temp = List<String>();
-
-  @override
-  Widget build(BuildContext context) {
-    setState(() async {
-      final dao = Provider.of<WordDao>(context);
-      words = await dao.getByTopic(widget.topic.id);
-      for (int i = 0; i < words.length; i++) temp.add(words.elementAt(i).word);
-    });
-    return Container(
-      child: GridView.builder(
-          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-              crossAxisCount: Orientation == Orientation.portrait ? 3 : 2),
-          itemCount: words.length,
-          itemBuilder: (BuildContext context, int index) =>
-              buildCard(context, index)),
-    );
-  }
-
-  /*
-  StreamBuilder<List<DB.Word>> buildList(BuildContext context) {
-    final dao = Provider.of<DB.WordDao>(context);
-    return StreamBuilder(
-      stream: dao.getByTopic(widget.topic.id).
-      builder: (context, AsyncSnapshot<List<DB.Topic>> snapshot) {
-        final topics = snapshot.data ?? List();
-        return ;
-      },
-    );
-  }
-  */
   Widget buildCard(BuildContext context, int index) {
-    final word = words.elementAt(index);
+    final word = widget.allData.words.elementAt(index);
     return Container(
       child: GestureDetector(
         onTap: () {
@@ -103,5 +146,17 @@ class _WordsPageState extends State<WordsPageView> {
         ),
       ),
     );
+  }
+}
+
+class WordsPage extends StatelessWidget {
+  final DB.Topic topic;
+  WordsPage({
+    Key key,
+    @required this.topic,
+  }) : super(key: key);
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(body: WordsView(topic: topic));
   }
 }

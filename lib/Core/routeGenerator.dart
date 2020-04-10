@@ -9,7 +9,6 @@ import '../Pages/RadioPage.dart';
 import '../Pages/VideoPage.dart';
 import '../Pages/WordPage.dart';
 import '../Pages/WordsPage.dart';
-import '../Pages/TopicPage.dart';
 import 'package:provider/provider.dart';
 
 class RouteGenerator {
@@ -22,14 +21,6 @@ class RouteGenerator {
                 Provider(create: (_) => UserDatabase().topicDao,),
               ],
               child: TopicsPage()
-            ));
-      case '/Topic' :
-      return MaterialPageRoute(builder: (_) => MultiProvider (
-              providers: [
-                Provider(create: (_) => UserDatabase().topicDao,),
-                Provider(create: (_) => UserDatabase().imageDao,)
-              ],
-              child: TopicPage(topicData: args)
             ));
       case '/Study' :
         if (args is String) {

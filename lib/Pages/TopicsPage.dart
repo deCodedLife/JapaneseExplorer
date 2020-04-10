@@ -220,6 +220,9 @@ class _TopicViewState extends State<TopicView> {
     final topicsDao = Provider.of<DB.TopicDao>(context);
     load(topicsDao);
     return Scaffold(
+      appBar: AppBar(
+        title: Text('Loading topics'),
+      ),
       body: Center(
         child: SpinKitRing(
           color: Colors.purpleAccent,

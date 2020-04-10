@@ -95,6 +95,15 @@ class SoundDao extends DatabaseAccessor<UserDatabase> with _$SoundDaoMixin {
   Future insertSounds(Insertable<Sound> sound) => into(sounds).insert(sound);
   Future updateSounds(Insertable<Sound> sound) => update(sounds).replace(sound);
   Future deleteSounds(Insertable<Sound> sound) => delete(sounds).delete(sound);
+  Future<int> addSound(Sound sound) {
+    return into(sounds).insert(sound);
+  }
+  Future <Sound> getByID(int id) {
+    return (select(sounds)
+      ..where(
+        (t) => t.id.equals(id)
+      )).getSingle();
+  } 
 }
 
 @UseDao(tables: [Videos])
@@ -139,4 +148,7 @@ class WordDao extends DatabaseAccessor<UserDatabase> with _$WordDaoMixin {
   Future insertWords(Insertable<Word> word) => into(words).insert(word);
   Future updateWords(Insertable<Word> word) => update(words).replace(word);
   Future deleteWords(Insertable<Word> word) => delete(words).delete(word);
+  Future<int> addWord(Word word) {
+    return into(words).insert(word);
+  }
 }

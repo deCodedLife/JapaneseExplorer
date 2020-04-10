@@ -99,7 +99,7 @@ class _MainAppState extends State<MainApp> {
                         return null;
                       },
                       decoration: InputDecoration(
-                          labelText: 'Name', hintText: 'Enter topic name'),
+                          labelText: 'Name *', hintText: 'Enter topic name'),
                       onChanged: (String text) {
                         setState(() {
                           topicNameController = false;

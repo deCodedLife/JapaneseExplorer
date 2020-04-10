@@ -30,6 +30,7 @@ dependencies:
     #distributionUrl=https\://services.gradle.org/distributions/gradle-4.6-all.zip
   flutter_plugin_android_lifecycle: ^1.0.6
   flutter_spinkit: ^4.1.2+1
+  file_picker: ^1.6.0
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.

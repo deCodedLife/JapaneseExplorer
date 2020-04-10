@@ -1,0 +1,65 @@
+name: japanese_explorer
+description: A new Flutter project.
+
+# The following defines the version and build number for your application.
+# A version number is three numbers separated by dots, like 1.2.43
+# followed by an optional build number separated by a +.
+# Both the version and the builder number may be overridden in flutter
+# build by specifying --build-name and --build-number, respectively.
+# In Android, build-name is used as versionName while build-number used as versionCode.
+# Read more about Android versioning at https://developer.android.com/studio/publish/versioning
+# In iOS, build-name is used as CFBundleShortVersionString while build-number used as CFBundleVersion.
+# Read more about iOS versioning at
+# https://developer.apple.com/library/archive/documentation/General/Reference/InfoPlistKeyReference/Articles/CoreFoundationKeys.html
+version: 1.0.0+1
+
+environment:
+  sdk: ">=2.2.0 <3.0.0"
+  #flutter: ">=1.12.13+hotfix.6 <2.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+  moor_flutter: ^2.1.1
+  provider: ^3.0.0+1
+  moor: ^2.4.2
+  moor_ffi: ^0.4.0
+  image_picker:
+  swipedetector: ^1.2.0
+    #distributionUrl=https\://services.gradle.org/distributions/gradle-4.10.2-all.zip
+    #distributionUrl=https\://services.gradle.org/distributions/gradle-4.6-all.zip
+  flutter_plugin_android_lifecycle: ^1.0.6
+  flutter_spinkit: ^4.1.2+1
+
+  # The following adds the Cupertino Icons font to your application.
+  # Use with the CupertinoIcons class for iOS style icons.
+  cupertino_icons: ^0.1.2
+
+dev_dependencies:
+  #flutter_test:
+  #  sdk: flutter
+  #e2e: ^0.2.1
+  flutter_driver:
+   sdk: flutter
+  moor_generator: ^2.4.0
+  build_runner:
+
+
+# For information on the generic Dart part of this file, see the
+# following page: https://dart.dev/tools/pub/pubspec
+
+# The following section is specific to Flutter.
+flutter:
+
+  # The following line ensures that the Material Icons font is
+  # included with your application, so that you can use the icons in
+  # the material Icons class.
+  uses-material-design: true
+
+targets:
+  $default:
+    builders:
+      moor_generator:
+        options:
+          sqlite_modules:
+            - json1

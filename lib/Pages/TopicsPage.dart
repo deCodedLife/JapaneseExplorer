@@ -43,6 +43,10 @@ class _MainAppState extends State<MainApp> {
   String topicDiscription;
   bool topicNameController = false;
   bool topicDiscriptionController = false;
+  String newTopicName;
+  String newTopicDiscription;
+  bool newTopicNameController = false;
+  bool newTopicDiscriptionController = false;
   var refreshKey = GlobalKey<RefreshIndicatorState>();
   @override
   Widget build(BuildContext context) {
@@ -192,7 +196,7 @@ class _MainAppState extends State<MainApp> {
           Navigator.of(context).pushNamed('/Words', arguments: topic);
         },
         trailing: PopupMenuButton<String>(
-          onSelected: makeChoise,
+          onSelected: (String choise) => makeChoise(choise, topic),
           itemBuilder: (BuildContext context) {
             return Tips.choises.map((String choise) {
               return PopupMenuItem<String>(
@@ -204,31 +208,109 @@ class _MainAppState extends State<MainApp> {
         ));
   }
 
-  void makeChoise(String choise) {
+  void makeChoise(String choise, DB.Topic topic) {
     if (choise == Tips.delete) {
-      showDialog(context: context, builder: (BuildContext context) {
-        return AlertDialog (
-          title: Text(
-            'Confirm',
-            style: TextStyle(
-              color: Colors.purpleAccent,
-              fontSize: 24
+      showDialog(
+          context: context,
+          builder: (BuildContext context) {
+            return AlertDialog(
+              title: Text(
+                'Confirm',
+                style: TextStyle(color: Colors.purpleAccent, fontSize: 24),
+              ),
+              content: Text(
+                'Are you shure want to DELETE topic: ' + topic.name + '?',
+                style: TextStyle(fontSize: 18),
+              ),
+              actions: <Widget>[
+                MaterialButton(
+                  child: Text('cancel'),
+                  textColor: Colors.black,
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
+                ),
+                MaterialButton(
+                  child: Text('Submit'),
+                  textColor: Colors.purpleAccent,
+                  onPressed: () {
+                    widget.allData.topicsDao.deleteTopics(topic);
+                    refreshpage(widget.allData.topicsDao);
+                    Navigator.pop(context);
+                  },
+                )
+              ],
+            );
+          });
+    }
+    if (choise == Tips.edit) {
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: Text(
+              'Edit ' + topic.name,
+              style: TextStyle(fontSize: 24, color: Colors.purpleAccent),
             ),
-          ),
-          actions: <Widget>[
-            MaterialButton(
-              child: Text('cancel'),
-              textColor: Colors.black,
-              onPressed: () {},
+            content: new SingleChildScrollView(
+              child: new Column(
+                //crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: <Widget>[
+                  new TextFormField(
+                    validator: (String text) {
+                      if (text.length == 0) return 'Required';
+                      if (text.length > 20) return 'Too long';
+                      return null;
+                    },
+                    decoration: InputDecoration(
+                        labelText: 'Name *', hintText: topic.name),
+                    onChanged: (String text) {
+                      setState(() {
+                        newTopicNameController = false;
+                        if (text != newTopicName) newTopicName = text;
+                      });
+                    },
+                  ),
+                  new TextFormField(
+                    validator: (String text) {
+                      if (text.length == 0) return 'Required';
+                      if (text.length > 20) return 'Too long';
+                      return null;
+                    },
+                    decoration: InputDecoration(
+                        labelText: 'Description *',
+                        hintText: topic.description),
+                    onChanged: (String text) {
+                      setState(() {
+                        newTopicDiscriptionController = false;
+                        if (text != newTopicDiscription)
+                          newTopicDiscription = text;
+                      });
+                    },
+                  ),
+                ],
+              ),
             ),
-            MaterialButton(
-              child: Text('submit'),
-              textColor: Colors.purpleAccent,
-              onPressed: () {},
-            )
-          ],
-        );
-      });
+            actions: <Widget>[
+              MaterialButton(
+                child: Text('Submit'),
+                textColor: Colors.purpleAccent,
+                onPressed: () {
+                  if (newTopicName.length != 0 &&
+                      newTopicDiscription.length != 0) {
+                    widget.allData.topicsDao.updateTopics(topic.copyWith(
+                        name: newTopicName, description: newTopicDiscription));
+                    refreshpage(widget.allData.topicsDao);
+                    Navigator.pop(context);
+                  }
+                },
+              )
+            ],
+          );
+        },
+      );
     }
   }
 }

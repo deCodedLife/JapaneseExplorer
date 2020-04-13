@@ -1,9 +1,6 @@
 import 'dart:async';
 import 'Pages/MainPage.dart';
 import 'package:flutter/material.dart';
-import 'Core/DatabaseAPI.dart';
-
-Database db = Database();
 
 void main() async {
   runApp( MaterialApp(

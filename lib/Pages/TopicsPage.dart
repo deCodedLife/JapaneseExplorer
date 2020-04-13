@@ -1,3 +1,5 @@
+import 'package:japanese_explorer/Pages/Additional/TopicPopup.dart';
+
 import '../Data/UserDB.dart' as DB;
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -86,45 +88,45 @@ class _MainAppState extends State<MainApp> {
               ),
             ),
             content: new SingleChildScrollView(
-                child: new Column(
-                  //crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisSize: MainAxisSize.min,
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: <Widget>[
-                    new TextFormField(
-                      validator: (String text) {
-                        if (text.length == 0) return 'Required';
-                        if (text.length > 20) return 'Too long';
-                        if (text == '' || text == "") return 'Required';
-                        return null;
-                      },
-                      decoration: InputDecoration(
-                          labelText: 'Name *', hintText: 'Enter topic name'),
-                      onChanged: (String text) {
-                        setState(() {
-                          topicNameController = false;
-                          if (text != topicName) topicName = text;
-                        });
-                      },
-                    ),
-                    new TextFormField(
-                      validator: (String text) {
-                        if (text.length == 0) return 'Required';
-                        if (text.length > 20) return 'Too long';
-                        return null;
-                      },
-                      decoration: InputDecoration(
-                          labelText: 'Description *',
-                          hintText: 'Enter description'),
-                      onChanged: (String text) {
-                        setState(() {
-                          topicDiscriptionController = false;
-                          if (text != topicDiscription) topicDiscription = text;
-                        });
-                      },
-                    ),
-                  ],
-                ),
+              child: new Column(
+                //crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: <Widget>[
+                  new TextFormField(
+                    validator: (String text) {
+                      if (text.length == 0) return 'Required';
+                      if (text.length > 20) return 'Too long';
+                      if (text == '' || text == "") return 'Required';
+                      return null;
+                    },
+                    decoration: InputDecoration(
+                        labelText: 'Name *', hintText: 'Enter topic name'),
+                    onChanged: (String text) {
+                      setState(() {
+                        topicNameController = false;
+                        if (text != topicName) topicName = text;
+                      });
+                    },
+                  ),
+                  new TextFormField(
+                    validator: (String text) {
+                      if (text.length == 0) return 'Required';
+                      if (text.length > 20) return 'Too long';
+                      return null;
+                    },
+                    decoration: InputDecoration(
+                        labelText: 'Description *',
+                        hintText: 'Enter description'),
+                    onChanged: (String text) {
+                      setState(() {
+                        topicDiscriptionController = false;
+                        if (text != topicDiscription) topicDiscription = text;
+                      });
+                    },
+                  ),
+                ],
+              ),
             ),
             actions: <Widget>[
               MaterialButton(
@@ -160,7 +162,9 @@ class _MainAppState extends State<MainApp> {
     refreshKey.currentState?.show();
     var _topics = topicsDao.getAllTopics();
     _topics.then((req) {
-      setState(() {topics = req;});
+      setState(() {
+        topics = req;
+      });
     });
     await Future.delayed(Duration(seconds: 3));
     return null;
@@ -170,25 +174,62 @@ class _MainAppState extends State<MainApp> {
     final topic = topics.elementAt(index);
     //final image = images.elementAt(index);
     return ListTile(
-      //leading: Image.file(File(image), fit: BoxFit.fill),
-      title: Text(
-        topic.name,
-        style: TextStyle(
-          fontSize: 24,
+        //leading: Image.file(File(image), fit: BoxFit.fill),
+        title: Text(
+          topic.name,
+          style: TextStyle(
+            fontSize: 24,
+          ),
         ),
-      ),
-      subtitle: Text(
-        topic.description,
-        style: TextStyle(
-          fontSize: 18,
-          fontStyle: FontStyle.italic,
+        subtitle: Text(
+          topic.description,
+          style: TextStyle(
+            fontSize: 18,
+            fontStyle: FontStyle.italic,
+          ),
         ),
-      ),
-      onTap: () {
-        Navigator.of(context).pushNamed('/Words', arguments: topic);
-      },
-      trailing: Icon(Icons.more_vert),
-    );
+        onTap: () {
+          Navigator.of(context).pushNamed('/Words', arguments: topic);
+        },
+        trailing: PopupMenuButton<String>(
+          onSelected: makeChoise,
+          itemBuilder: (BuildContext context) {
+            return Tips.choises.map((String choise) {
+              return PopupMenuItem<String>(
+                value: choise,
+                child: Text(choise),
+              );
+            }).toList();
+          },
+        ));
+  }
+
+  void makeChoise(String choise) {
+    if (choise == Tips.delete) {
+      showDialog(context: context, builder: (BuildContext context) {
+        return AlertDialog (
+          title: Text(
+            'Confirm',
+            style: TextStyle(
+              color: Colors.purpleAccent,
+              fontSize: 24
+            ),
+          ),
+          actions: <Widget>[
+            MaterialButton(
+              child: Text('cancel'),
+              textColor: Colors.black,
+              onPressed: () {},
+            ),
+            MaterialButton(
+              child: Text('submit'),
+              textColor: Colors.purpleAccent,
+              onPressed: () {},
+            )
+          ],
+        );
+      });
+    }
   }
 }
 
@@ -235,13 +276,11 @@ class _TopicViewState extends State<TopicView> {
   void load(DB.TopicDao topicDao) async {
     if (topics.length == 0 && !block) {
       var _topics = topicDao.getAllTopics();
-      _topics.then( (req) => 
-        setState(() {
-        topicsDaos = topicDao;
-        topics = req;
-        if (req.length == 0 || req.length == 1) block = true;
-      })
-      );      
+      _topics.then((req) => setState(() {
+            topicsDaos = topicDao;
+            topics = req;
+            if (req.length == 0 || req.length == 1) block = true;
+          }));
     }
   }
 }

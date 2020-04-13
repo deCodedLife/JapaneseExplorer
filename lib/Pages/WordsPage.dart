@@ -19,6 +19,12 @@ class Data {
       this.sounds, this.topic);
 }
 
+class Fuck {
+  List<String> images;
+  List<String> sounds;
+  Fuck(this.images, this.sounds);
+}
+
 class WordsView extends StatefulWidget {
   final DB.Topic topic;
   WordsView({
@@ -73,29 +79,35 @@ class _WordsViewState extends State<WordsView> {
     );
   }
 
-  Future init(List<DB.Word> words, DB.ImageDao imageDao, DB.SoundDao soundDao) {
+  Future<Fuck> initAll(
+      List<DB.Word> words, DB.ImageDao imageDao, DB.SoundDao soundDao) async {
+    List<String> temp1 = List<String>();
+    List<String> temp2 = List<String>();
     for (int i = 0; i < words.length; i++) {
       var word = words.elementAt(i);
-      imageDao.getByID(word.image).then((value) => images.add(value.path));
-      soundDao.getByID(word.sound).then((value) => sounds.add(value.path));
+      var image = await imageDao.getByID(word.image);
+      var sound = await soundDao.getByID(word.sound);
+      temp1.add(image.path);
+      temp2.add(sound.path);
     }
-    return null;
+    return Fuck(temp1, temp2);
   }
 
   void load(
       DB.WordDao wordDao, DB.ImageDao imageDao, DB.SoundDao soundDao) async {
     if (words.length == 0 && !block) {
       var _words = wordDao.getByTopic(widget.topic.id);
-      _words.then((words) {
-        var initial =
-            init(words, imageDao, soundDao).then((value) => setState(() {
-                  wordsDao = wordDao;
-                  imagesDao = imageDao;
-                  soundsDao = soundDao;
-                  words = words;
-                  print("Pizda: " + words.toString());
-                  if (words.length == 0 || words.length == 1) block = true;
-                }));
+      _words.then((allWords) {
+        initAll(allWords, imageDao, soundDao).then((data) => setState(() {
+              wordsDao = wordDao;
+              imagesDao = imageDao;
+              soundsDao = soundDao;
+              images = data.images;
+              sounds = data.sounds;
+              words = allWords;
+              print("Pizda: " + words.toString());
+              if (words.length == 0 || words.length == 1) block = true;
+            }));
       });
     }
   }
@@ -114,6 +126,7 @@ class MainView extends StatefulWidget {
 
 class _MainViewState extends State<MainView> {
   List<String> temp = List<String>();
+  List<String> tempImages = List<String>();
   List<DB.Word> words = List<DB.Word>();
   var refreshKey = GlobalKey<RefreshIndicatorState>();
 
@@ -121,12 +134,9 @@ class _MainViewState extends State<MainView> {
   Widget build(BuildContext context) {
     if (words.length == 0) words = widget.allData.words;
     setState(() {
-      var imgDao = widget.allData.imagesDao;
-      var musDao = widget.allData.soundsDao;
-      for (int i = 0; i < words.length; i++) {
-        var word = words.elementAt(i);
-        temp.add(word.word);
-      }
+      for (int i = 0; i < words.length; i++) temp.add(words.elementAt(i).word);
+      for (int i = 0; i < widget.allData.images.length; i++)
+        tempImages.add(widget.allData.images.elementAt(i));
     });
     return Scaffold(
       appBar: AppBar(
@@ -181,34 +191,26 @@ class _MainViewState extends State<MainView> {
           });
         },
         child: Card(
-          color: Colors.white,
-          elevation: 10,
-          child: Column(
-            children: [
-              Image.file(File(widget.allData.images.elementAt(index))),
-              Center(
-                child: Padding(
-                  padding: const EdgeInsets.all(20),
-                  child: Column(
-                    mainAxisSize: MainAxisSize.max,
-                    children: <Widget>[
-                      Spacer(),
-                      Text(
-                        temp[index],
-                        softWrap: true,
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                          fontSize: 32,
-                        ),
-                      ),
-                      Spacer(),
-                    ],
+            color: Colors.white,
+            elevation: 10,
+            child: Padding(
+              padding: const EdgeInsets.all(20),
+              child: Column(
+                mainAxisSize: MainAxisSize.max,
+                children: <Widget>[
+                  Spacer(),
+                  Text(
+                    temp[index],
+                    softWrap: true,
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      fontSize: 32,
+                    ),
                   ),
-                ),
+                  Spacer(),
+                ],
               ),
-            ],
-          ),
-        ),
+            )),
       ),
     );
   }

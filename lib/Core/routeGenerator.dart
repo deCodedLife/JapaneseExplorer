@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import '../Data/Card.dart';
 import '../Data/UserDB.dart';
 //import 'package:japanese_explorer/Pages/MainPage.dart';
 import '../Pages/TopicsPage.dart';
@@ -7,7 +6,6 @@ import '../Pages/StudyPage.dart';
 import '../Pages/CulturePage.dart';
 import '../Pages/RadioPage.dart';
 import '../Pages/VideoPage.dart';
-import '../Pages/WordPage.dart';
 import '../Pages/WordsPage.dart';
 import 'package:provider/provider.dart';
 
@@ -27,7 +25,7 @@ class RouteGenerator {
           return MaterialPageRoute(
             builder:  (_) => Provider (
               create: (_) => UserDatabase().topicDao,
-              child: StudyPage(data: args),
+              child: StudyPage(),
             )
           );
         }
@@ -35,20 +33,15 @@ class RouteGenerator {
       case '/Words' :
         if (args is Topic) {
           return MaterialPageRoute(
-            builder:  (_) => Provider( 
-              create: (_) => UserDatabase().wordDao,
+            builder:  (context) => MultiProvider(
+              providers: [
+                Provider(create: (_) => UserDatabase().wordDao),
+                Provider(create: (_) => UserDatabase().imageDao),
+                Provider(create: (_) => UserDatabase().soundDao)
+              ], 
               child: WordsPage( topic: args ), 
             ),
           ) ;
-        }
-        return _errorRoute();
-      case '/Word' :
-        if (args is CardData) {
-          return MaterialPageRoute(
-            builder:  (_) => WordPage(
-              data: args,
-            ),
-          );
         }
         return _errorRoute();
       case '/Culture' :

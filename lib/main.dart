@@ -1,44 +1,108 @@
-import 'dart:async';
+import 'Pages/CulturePage.dart';
+import 'Pages/StudyPage.dart';
+import 'Pages/TopicsPage.dart';
+import 'Pages/VideoPage.dart';
+import 'package:provider/provider.dart';
+import 'Data/UserDB.dart';
 import 'Pages/MainPage.dart';
 import 'package:flutter/material.dart';
 
 void main() async {
-  runApp( MaterialApp(
-    home: JapaneseExplorer(),
-  ),
+  runApp(
+    MaterialApp(
+      theme: ThemeData(
+          primarySwatch: Colors.purple,
+          buttonColor: Colors.purple,
+          buttonTheme: const ButtonThemeData(
+            textTheme: ButtonTextTheme.primary,
+          )),
+      home: MainPage(),
+    ),
   );
 }
 
-class SplashScreen extends StatefulWidget {
-  _SplashState createState() => _SplashState();
+class MainPage extends StatefulWidget {
+  _MainPageState createState() => _MainPageState();
 }
 
-class _SplashState extends State<SplashScreen> {
+class _MainPageState extends State<MainPage> {
+  int selectedPage = 0;
+  var controller = PageController();
 
-  @override
-  void initState() {
-    super.initState();
-    Future.delayed(
-      Duration(seconds: 6),
-      () {
-        Navigator.push(
-          context, 
-          MaterialPageRoute(
-            builder: (context) => JapaneseExplorer(),
-            ),
-          );
-      },
-    );
-  }
+  List<MultiProvider> pages = [
+    MultiProvider (providers: [], child: JapaneseExplorer()),
+    MultiProvider (
+      providers: [
+        Provider(create: (_) => UserDatabase().topicDao)
+      ],
+      child: TopicsPage()),
+    MultiProvider(
+      providers: [
+        Provider(create: (_) => UserDatabase().topicDao)
+      ],
+      child: StudyPage(),
+    ),
+    MultiProvider(
+      providers: [
+        Provider(create: (_) => UserDatabase().videoDao,)
+      ],
+      child: VideoPage(),
+    ),
+    MultiProvider(
+      providers: [],
+      child: CulturePage(),
+    ),
+  ];
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Center(
-        child: FlutterLogo(
-          size: 300,
+        bottomNavigationBar: BottomNavigationBar(
+          items: <BottomNavigationBarItem>[
+            BottomNavigationBarItem(
+                icon: Icon(Icons.home,
+                    color:
+                        selectedPage == 0 ? Colors.purpleAccent : Colors.grey),
+                title: Text('Home', style: TextStyle(color: Colors.black))),
+            BottomNavigationBarItem(
+                icon: Icon(Icons.list,
+                    color:
+                        selectedPage == 1 ? Colors.purpleAccent : Colors.grey),
+                title: Text('Topics', style: TextStyle(color: Colors.black))),
+            BottomNavigationBarItem(
+                icon: Icon(Icons.school,
+                    color:
+                        selectedPage == 2 ? Colors.purpleAccent : Colors.grey),
+                title: Text('Study', style: TextStyle(color: Colors.black))),
+            BottomNavigationBarItem(
+                icon: Icon(Icons.videocam,
+                    color:
+                        selectedPage == 3 ? Colors.purpleAccent : Colors.grey),
+                title: Text('Videos', style: TextStyle(color: Colors.black))),
+            BottomNavigationBarItem(
+                icon: Icon(Icons.schedule,
+                    color:
+                        selectedPage == 4 ? Colors.purpleAccent : Colors.grey),
+                title: Text('Culture', style: TextStyle(color: Colors.black)))
+          ],
+          currentIndex: selectedPage,
+          onTap: (index) {
+            setState(() {
+              selectedPage = index;
+              controller.animateToPage(selectedPage,
+                  duration: Duration(microseconds: 200),
+                  curve: Curves.easeInOutCubic);
+            });
+          },
         ),
-      ),
-    );
+        body: PageView(
+          controller: controller,
+          children: pages,
+          onPageChanged: (index) {
+            setState(() {
+              selectedPage = index;
+            });
+          },
+        ));
   }
 }

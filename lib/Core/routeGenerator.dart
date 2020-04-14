@@ -25,7 +25,7 @@ class RouteGenerator {
           return MaterialPageRoute(
             builder:  (_) => Provider (
               create: (_) => UserDatabase().topicDao,
-              child: StudyPage(data: args),
+              child: StudyPage(),
             )
           );
         }
@@ -33,7 +33,7 @@ class RouteGenerator {
       case '/Words' :
         if (args is Topic) {
           return MaterialPageRoute(
-            builder:  (_) => MultiProvider(
+            builder:  (context) => MultiProvider(
               providers: [
                 Provider(create: (_) => UserDatabase().wordDao),
                 Provider(create: (_) => UserDatabase().imageDao),

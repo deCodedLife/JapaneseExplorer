@@ -15,8 +15,15 @@ class JapaneseExplorer extends StatelessWidget {
             textTheme: ButtonTextTheme.primary,
           )),
       title: 'Japanese Explorer',
+      home: Scaffold(
+        appBar: AppBar(
+          title: Text('Mainpage'),
+        ),
+      ),
+      /*
       initialRoute: '/',
       onGenerateRoute: RouteGenerator.generateRoute,
+      */
     );
     return materialApp;
   }

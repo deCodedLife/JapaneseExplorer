@@ -1,14 +1,39 @@
-import 'Additional/TopicPopup.dart';
+import 'AdditionalData/TopicPopup.dart';
 import '../Core/routeGenerator.dart';
 import '../Data/UserDB.dart' as DB;
 import 'WordsPage.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:swipedetector/swipedetector.dart';
 
 bool block = false;
 bool deny = false;
 var globalContext;
+
+List<DB.Topic> temporary = List<DB.Topic>();
+
+class TopicsLogic {
+  void setTemporary(List<DB.Topic> temp) {
+    temporary = temp;
+  }
+
+  void loadAll(BuildContext _globalContext) {
+    Navigator.push(
+        _globalContext,
+        MaterialPageRoute(
+            builder: (context) => MultiProvider(
+                  providers: [
+                    Provider(
+                      create: (_) => DB.UserDatabase().topicDao,
+                    )
+                  ],
+                  child: TopicsPage(),
+                )));
+  }
+
+  void clearTemporary() {
+    temporary = List<DB.Topic>();
+  }
+}
 
 class TopicsPage extends StatelessWidget {
   @override
@@ -146,29 +171,37 @@ class _MainAppState extends State<MainApp> {
 
   Future<Null> refreshpage(DB.TopicDao currentTopicsDao) async {
     refreshKey.currentState?.show();
-    var _topics = currentTopicsDao.getAllTopics();
-    _topics.then((req) {
+    if (temporary.length == 0) {
+      var _topics = currentTopicsDao.getAllTopics();
+      _topics.then((req) {
+        setState(() {
+          topics = req;
+          topicsDao = currentTopicsDao;
+        });
+      });
+      await Future.delayed(Duration(seconds: 3));
+    } else {
       setState(() {
-        topics = req;
+        topics = temporary;
         topicsDao = currentTopicsDao;
       });
-    });
-    await Future.delayed(Duration(seconds: 3));
+      await Future.delayed(Duration(seconds: 3));
+    }
     return null;
   }
 
   void make(DB.Topic topic) {
     Navigator.push(
-          globalContext,
-          MaterialPageRoute(
-              builder: (context) => MultiProvider(
-                    providers: [
-                      Provider(create: (_) => DB.UserDatabase().wordDao),
-                      Provider(create: (_) => DB.UserDatabase().imageDao),
-                      Provider(create: (_) => DB.UserDatabase().soundDao)
-                    ],
-                    child: WordsPage(topic: topic),
-                  )));
+        globalContext,
+        MaterialPageRoute(
+            builder: (context) => MultiProvider(
+                  providers: [
+                    Provider(create: (_) => DB.UserDatabase().wordDao),
+                    Provider(create: (_) => DB.UserDatabase().imageDao),
+                    Provider(create: (_) => DB.UserDatabase().soundDao)
+                  ],
+                  child: WordsPage(topic: topic),
+                )));
   }
 
   Widget buildTopic(BuildContext context, int index) {

@@ -1,3 +1,4 @@
+import 'Pages/RadioPage.dart';
 import 'Pages/CulturePage.dart';
 import 'Pages/StudyPage.dart';
 import 'Pages/TopicsPage.dart';
@@ -30,25 +31,25 @@ class _MainPageState extends State<MainPage> {
   var controller = PageController();
 
   List<MultiProvider> pages = [
-    MultiProvider (
-      providers: [
-        Provider(create: (_) => UserDatabase().topicDao)
-      ], 
-      child: JapaneseExplorer()),
-    MultiProvider (
-      providers: [
-        Provider(create: (_) => UserDatabase().topicDao)
-      ],
-      child: TopicsPage()),
     MultiProvider(
-      providers: [
-        Provider(create: (_) => UserDatabase().topicDao)
-      ],
+        providers: [Provider(create: (_) => UserDatabase().topicDao)],
+        child: JapaneseExplorer()),
+    MultiProvider(
+      providers: [Provider(create: (_) => UserDatabase().topicDao)],
       child: StudyPage(),
     ),
     MultiProvider(
+        providers: [Provider(create: (_) => UserDatabase().topicDao)],
+        child: TopicsPage()),
+    MultiProvider(
+      providers: [Provider(create: (_) => UserDatabase().soundDao)],
+      child: RadioPage(),
+    ),
+    MultiProvider(
       providers: [
-        Provider(create: (_) => UserDatabase().videoDao,)
+        Provider(
+          create: (_) => UserDatabase().videoDao,
+        )
       ],
       child: VideoPage(),
     ),
@@ -69,24 +70,29 @@ class _MainPageState extends State<MainPage> {
                         selectedPage == 0 ? Colors.purpleAccent : Colors.grey),
                 title: Text('Home', style: TextStyle(color: Colors.black))),
             BottomNavigationBarItem(
-                icon: Icon(Icons.list,
-                    color:
-                        selectedPage == 1 ? Colors.purpleAccent : Colors.grey),
-                title: Text('Topics', style: TextStyle(color: Colors.black))),
-            BottomNavigationBarItem(
                 icon: Icon(Icons.school,
                     color:
-                        selectedPage == 2 ? Colors.purpleAccent : Colors.grey),
+                        selectedPage == 1 ? Colors.purpleAccent : Colors.grey),
                 title: Text('Study', style: TextStyle(color: Colors.black))),
+            BottomNavigationBarItem(
+                icon: Icon(Icons.list,
+                    color:
+                        selectedPage == 2 ? Colors.purpleAccent : Colors.grey),
+                title: Text('Topics', style: TextStyle(color: Colors.black))),
+            BottomNavigationBarItem(
+                icon: Icon(Icons.radio,
+                    color:
+                        selectedPage == 3 ? Colors.purpleAccent : Colors.grey),
+                title: Text('Radio', style: TextStyle(color: Colors.black))),
             BottomNavigationBarItem(
                 icon: Icon(Icons.videocam,
                     color:
-                        selectedPage == 3 ? Colors.purpleAccent : Colors.grey),
+                        selectedPage == 4 ? Colors.purpleAccent : Colors.grey),
                 title: Text('Videos', style: TextStyle(color: Colors.black))),
             BottomNavigationBarItem(
                 icon: Icon(Icons.schedule,
                     color:
-                        selectedPage == 4 ? Colors.purpleAccent : Colors.grey),
+                        selectedPage == 5 ? Colors.purpleAccent : Colors.grey),
                 title: Text('Culture', style: TextStyle(color: Colors.black)))
           ],
           currentIndex: selectedPage,

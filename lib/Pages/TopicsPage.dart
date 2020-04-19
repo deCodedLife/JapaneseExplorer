@@ -16,9 +16,9 @@ class TopicsLogic {
     temporary = temp;
   }
 
-  void loadAll(BuildContext globalContext) {
+  void loadAll(BuildContext _globalContext) {
     Navigator.push(
-        globalContext,
+        _globalContext,
         MaterialPageRoute(
             builder: (context) => MultiProvider(
                   providers: [

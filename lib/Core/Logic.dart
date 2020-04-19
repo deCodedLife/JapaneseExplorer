@@ -19,12 +19,13 @@ class AppLogic {
     return null;
   }
 
-  void GetRecent (TopicDao topicDao) {
-    var topics = topicDao.getAllTopics();
-    topics.then((result) {
-      if (result.length <= 10) return result;
-      else result.getRange(result.length -  10, result.length);
-    });
-    return null;
+  Future<List<Topic>> getRecent(TopicDao topicDao) async {
+    var result = await topicDao.getAllTopics();
+    if (result.length <= 10) return result;
+      else {
+        var topics = result.getRange(result.length -  10, result.length);
+        List<Topic> newResult = topics;
+        return newResult;
+      }
   }
 }

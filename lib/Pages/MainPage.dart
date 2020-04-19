@@ -1,13 +1,20 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'TopicsPage.dart';
 import '../Core/Logic.dart';
+import '../Data/UserDB.dart';
 
 MaterialColor _theme = Colors.purple;
+BuildContext globalContext;
+TopicDao globalTopicDao;
 
 class JapaneseExplorer extends StatelessWidget {
   final List<String> cards = ['Recent','Update','Options'];
-
+  
   @override
   Widget build(BuildContext context) {
+    globalContext = context;
+    globalTopicDao = Provider.of<TopicDao>(context);
     var materialApp = MaterialApp(
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
@@ -37,7 +44,13 @@ class JapaneseExplorer extends StatelessWidget {
         child: Container(
           child: GestureDetector(
             onTap: () {
-
+              if ( index == 0 ) {
+                var response = AppLogic().getRecent(globalTopicDao);
+                response.then((result) {
+                  TopicsLogic().setTemporary(result);
+                  TopicsLogic().loadAll(globalContext);
+                });
+              }
             },
             child: Padding(
               padding: EdgeInsets.all(16.0),

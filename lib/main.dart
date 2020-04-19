@@ -30,7 +30,11 @@ class _MainPageState extends State<MainPage> {
   var controller = PageController();
 
   List<MultiProvider> pages = [
-    MultiProvider (providers: [], child: JapaneseExplorer()),
+    MultiProvider (
+      providers: [
+        Provider(create: (_) => UserDatabase().topicDao)
+      ], 
+      child: JapaneseExplorer()),
     MultiProvider (
       providers: [
         Provider(create: (_) => UserDatabase().topicDao)

@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 class DataItem {
   final Text title;
   final Text description;
-  final Image initIcon;
+  final CircleAvatar initIcon;
   final String link;
   DataItem(this.title, this.description, this.initIcon, this.link);
 }
@@ -18,9 +18,9 @@ List<DataItem> radioAPI = [
       '懐かしい 配信中',
       style: TextStyle(fontStyle: FontStyle.italic)
     ),
-    Image.network(
-      'https://static.mytuner.mobi/media/tvos_radios/tjq25grgtzfg.jpeg',
-      scale: 200,
+    CircleAvatar(
+      radius: 5,
+      backgroundImage: NetworkImage('https://static.mytuner.mobi/media/tvos_radios/tjq25grgtzfg.jpeg')
       ),
       'http://bluford.torontocast.com:8519/;'
   ),
@@ -30,9 +30,8 @@ List<DataItem> radioAPI = [
       '配信中',
       style: TextStyle(fontStyle: FontStyle.italic)
     ),
-    Image.network(
-      'https://static.mytuner.mobi/media/tvos_radios/3lstl6zfgcbx.png',
-      scale: 200
+    CircleAvatar(
+      backgroundImage: NetworkImage('https://static.mytuner.mobi/media/tvos_radios/3lstl6zfgcbx.png')
     ),
     'http://agnes.torontocast.com:8102/;'
   ),
@@ -42,9 +41,8 @@ List<DataItem> radioAPI = [
       '(Shonan Beach FM) 配信中',
       style: TextStyle(fontStyle: FontStyle.italic)
     ),
-    Image.network(
-      'https://static.mytuner.mobi/media/tvos_radios/Yve4FR2sFn.png',
-      scale: 200
+    CircleAvatar(
+      backgroundImage: NetworkImage('https://static.mytuner.mobi/media/tvos_radios/Yve4FR2sFn.png')
     ),
     'http://163.44.158.107:8000/by_the_sea'
   ),
@@ -54,9 +52,8 @@ List<DataItem> radioAPI = [
       '(Radio Shonan) 配信中',
       style: TextStyle(fontStyle: FontStyle.italic)
     ),
-    Image.network(
-      'https://static.mytuner.mobi/media/tvos_radios/mQX3QXdcpA.jpg',
-      scale: 200,
+    CircleAvatar(
+      backgroundImage: NetworkImage('https://static.mytuner.mobi/media/tvos_radios/mQX3QXdcpA.jpg')
     ),
     'https://musicbird.leanstream.co/JCB101-MP3'
   ),
@@ -66,9 +63,8 @@ List<DataItem> radioAPI = [
       '配信中',
       style: TextStyle(fontStyle: FontStyle.italic)
     ),
-    Image.network(
-      'https://static.mytuner.mobi/media/tvos_radios/zfu8ctxmscmq.jpg',
-      scale: 200,
+    CircleAvatar(
+      backgroundImage: NetworkImage('https://static.mytuner.mobi/media/tvos_radios/zfu8ctxmscmq.jpg')
     ),
     'http://bluford.torontocast.com:8526/;'
   ),
@@ -78,9 +74,8 @@ List<DataItem> radioAPI = [
       '配信中',
       style: TextStyle(fontStyle: FontStyle.italic)
     ),
-    Image.network(
-      'https://static.mytuner.mobi/media/tvos_radios/nxrsacawm2ey.png',
-      scale: 200,
+    CircleAvatar(
+      backgroundImage: NetworkImage('https://static.mytuner.mobi/media/tvos_radios/nxrsacawm2ey.png')
     ),
     'http://184.75.223.178:8087/;.mp3'
   ),
@@ -90,9 +85,8 @@ List<DataItem> radioAPI = [
       '配信中',
       style: TextStyle(fontStyle: FontStyle.italic)
     ),
-    Image.network(
-      'https://static.mytuner.mobi/media/tvos_radios/Q4KsEUWN5J.jpg',
-      scale: 200
+    CircleAvatar(
+      backgroundImage: NetworkImage('https://static.mytuner.mobi/media/tvos_radios/Q4KsEUWN5J.jpg')
     ),
     'http://curiosity.shoutca.st:8019/128'
   ),
@@ -102,9 +96,8 @@ List<DataItem> radioAPI = [
       '配信中',
       style: TextStyle(fontStyle: FontStyle.italic)
     ),
-    Image.network(
-      'https://static.mytuner.mobi/media/tvos_radios/5slkqvvdhajd.png',
-      scale: 200
+    CircleAvatar(
+      backgroundImage: NetworkImage('https://static.mytuner.mobi/media/tvos_radios/5slkqvvdhajd.png')
     ),
     'http://agnes.torontocast.com:8083/stream'
   ),
@@ -114,9 +107,8 @@ List<DataItem> radioAPI = [
       '配信中',
       style: TextStyle(fontStyle: FontStyle.italic)
     ),
-    Image.network(
-      'https://static.mytuner.mobi/media/tvos_radios/jsndecatjnre.png',
-      scale: 200,
+    CircleAvatar(
+      backgroundImage: NetworkImage('https://static.mytuner.mobi/media/tvos_radios/jsndecatjnre.png')
     ),
     'http://cristina.torontocast.com:8057/;.mp3'
   ),
@@ -126,9 +118,8 @@ List<DataItem> radioAPI = [
       '配信中',
       style: TextStyle(fontStyle: FontStyle.italic)
     ),
-    Image.network(
-      'https://static.mytuner.mobi/media/tvos_radios/bytgkfy7xy4q.jpg',
-      scale: 200
+    CircleAvatar(
+      backgroundImage: NetworkImage('https://static.mytuner.mobi/media/tvos_radios/bytgkfy7xy4q.jpg')
     ),
     'http://sky1.torontocast.com:9029/;'
   ),
@@ -138,9 +129,8 @@ List<DataItem> radioAPI = [
       '配信中',
       style: TextStyle(fontStyle: FontStyle.italic)
     ),
-    Image.network(
-      'https://static.mytuner.mobi/media/tvos_radios/ku7pgjfbk7ms.png',
-      scale: 200
+    CircleAvatar(
+      backgroundImage: NetworkImage('https://static.mytuner.mobi/media/tvos_radios/ku7pgjfbk7ms.png')
     ),
     'https://daniel.torontocast.com:2630/;'
   ),
@@ -150,11 +140,10 @@ List<DataItem> radioAPI = [
       '配信中',
       style: TextStyle(fontStyle: FontStyle.italic)
     ),
-    Image.network(
-      'https://static.mytuner.mobi/media/tvos_radios/sFcMxhmByx.jpg',
-      scale: 200
+    CircleAvatar(
+      backgroundImage: NetworkImage('https://static.mytuner.mobi/media/tvos_radios/sFcMxhmByx.jpg')
     ),
-    'http://www.simulradio.info/asx/uruma.asx'
+    'mms://hdv.nkansai.tv/fm-uruma'
   ),
   DataItem(
     Text('Japan-a-Radio 日本流行音樂與動畫卡通歌曲'),
@@ -162,9 +151,8 @@ List<DataItem> radioAPI = [
       '配信中',
       style: TextStyle(fontStyle: FontStyle.italic)
     ),
-    Image.network(
-      'https://static.mytuner.mobi/media/tvos_radios/UqbBDkDwhA.png',
-      scale: 200
+    CircleAvatar(
+      backgroundImage: NetworkImage('https://static.mytuner.mobi/media/tvos_radios/UqbBDkDwhA.png')
     ),
     'http://audio.misproductions.com/japan48kaacp;'
   ),
@@ -174,9 +162,8 @@ List<DataItem> radioAPI = [
       '配信中',
       style: TextStyle(fontStyle: FontStyle.italic)
     ),
-    Image.network(
-      'https://static.mytuner.mobi/media/tvos_radios/u72bquebkvwj.png',
-      scale: 200
+    CircleAvatar(
+      backgroundImage: NetworkImage('https://static.mytuner.mobi/media/tvos_radios/u72bquebkvwj.png')
     ),
     'http://agnes.torontocast.com:8011/stream'
   ),
@@ -186,9 +173,8 @@ List<DataItem> radioAPI = [
       '配信中',
       style: TextStyle(fontStyle: FontStyle.italic)
     ),
-    Image.network(
-      'https://static.mytuner.mobi/media/tvos_radios/qptkvZ5YeX.gif',
-      scale: 200
+    CircleAvatar(
+      backgroundImage: NetworkImage('https://static.mytuner.mobi/media/tvos_radios/qptkvZ5YeX.gif')
     ),
     'https://musicbird.leanstream.co/JCB079-MP3'
   ),
@@ -198,9 +184,8 @@ List<DataItem> radioAPI = [
       '配信中',
       style: TextStyle(fontStyle: FontStyle.italic)
     ),
-    Image.network(
-      'https://static.mytuner.mobi/media/radios-150px/r8uhzyznrxlc.jpg',
-      scale: 200
+    CircleAvatar(
+      backgroundImage: NetworkImage('https://static.mytuner.mobi/media/radios-150px/r8uhzyznrxlc.jpg')
     ),
     'https://streamer.radio.co/s83eb8ff39/listen'
   ),
@@ -210,9 +195,8 @@ List<DataItem> radioAPI = [
       'Animeradio.su',
       style: TextStyle(fontStyle: FontStyle.italic)
     ),
-    Image.network(
-      'https://static.mytuner.mobi/media/tvos_radios/xb2GGJUGXE.png',
-      scale: 200
+    CircleAvatar(
+      backgroundImage: NetworkImage('https://static.mytuner.mobi/media/tvos_radios/xb2GGJUGXE.png')
     ),
     'http://animeradio.su:8000/;'
   ),
@@ -222,9 +206,8 @@ List<DataItem> radioAPI = [
       'Animeradio.su',
       style: TextStyle(fontStyle: FontStyle.italic)
     ),
-    Image.network(
-      'https://static.mytuner.mobi/media/tvos_radios/xb2GGJUGXE.png',
-      scale: 200
+    CircleAvatar(
+      backgroundImage: NetworkImage('https://static.mytuner.mobi/media/tvos_radios/xb2GGJUGXE.png')
     ),
     'http://animeradio.su:8000/;'
   ),
@@ -234,9 +217,8 @@ List<DataItem> radioAPI = [
       '配信中',
       style: TextStyle(fontStyle: FontStyle.italic)
     ),
-    Image.network(
-      'https://static.mytuner.mobi/media/tvos_radios/k8Xemnx6dn.jpg',
-      scale: 200
+    CircleAvatar(
+      backgroundImage: NetworkImage('https://static.mytuner.mobi/media/tvos_radios/k8Xemnx6dn.jpg')
     ),
     'https://musicbird.leanstream.co/JCB071-MP3'
   ),
@@ -246,9 +228,8 @@ List<DataItem> radioAPI = [
       '配信中',
       style: TextStyle(fontStyle: FontStyle.italic)
     ),
-    Image.network(
-      'https://static.mytuner.mobi/media/tvos_radios/uWmTEUtzSP.jpg',
-      scale: 200
+    CircleAvatar(
+      backgroundImage: NetworkImage('https://static.mytuner.mobi/media/tvos_radios/uWmTEUtzSP.jpg')
     ),
     'https://musicbird.leanstream.co/JCB057-MP3'
   ),
@@ -258,9 +239,8 @@ List<DataItem> radioAPI = [
       '配信中',
       style: TextStyle(fontStyle: FontStyle.italic)
     ),
-    Image.network(
-      'https://static.mytuner.mobi/media/tvos_radios/A4mWGDSpRQ.png',
-      scale: 200
+    CircleAvatar(
+      backgroundImage: NetworkImage('https://static.mytuner.mobi/media/tvos_radios/A4mWGDSpRQ.png')
     ),
     'https://musicbird.leanstream.co/JCB078-MP3'
   ),

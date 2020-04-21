@@ -25,8 +25,9 @@ class Channel {
     return Channel (
       id: map['id'],
       title: map['snippet']['title'],
-      pictureUrl: map['snippet']['thumbnailds']['default']['url'],
-      subscribers: map['statistics']['videoCount'],
+      pictureUrl: map['snippet']['thumbnails']['default']['url'],
+      subscribers: map['statistics']['subscriberCount'],
+      videoCount: map['statistics']['videoCount'],
       uploadPlayList: map['contentDetails']['relatedPlaylists']['uploads']
     );
   }

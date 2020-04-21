@@ -1,10 +1,6 @@
 import 'package:flutter/material.dart';
 import '../Data/StaticRadio.dart';
-import 'package:http/http.dart';
 import 'package:audioplayers/audioplayers.dart';
-import 'dart:io';
-import '../Core/AudioPlayer.dart';
-import 'package:path_provider/path_provider.dart';
 
 class RadioPage extends StatefulWidget {
   @override
@@ -14,19 +10,6 @@ class RadioPage extends StatefulWidget {
 class _RadioPageState extends State<RadioPage> {
   final AudioPlayer audioPlayer = AudioPlayer();
   String localFilePath;
-
-  Future _loadFile(String url) async {
-    final bytes = await readBytes(url);
-    final dir = await getApplicationDocumentsDirectory();
-    final file = File('${dir.path}/audio.mp3');
-
-    await file.writeAsBytes(bytes);
-    if (await file.exists()) {
-      setState(() {
-        localFilePath = file.path;
-      });
-    }
-  }
 
   @override
   Widget build(BuildContext context) {

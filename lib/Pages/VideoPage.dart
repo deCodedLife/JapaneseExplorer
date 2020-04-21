@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:japanese_explorer/Pages/AdditionalData/VideoScreen.dart';
 import '../Core/ApiService.dart';
 import '../Data/Channel.dart';
 import '../Data/Video.dart';
@@ -126,7 +127,14 @@ class _VideoPageState extends State<VideoPage> {
   }
 
   _buildVideo(Video video) {
-    return Container(
+    return GestureDetector(
+      onTap: () => Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (_) => VideoScreen(id: video.id),
+        )
+        ),
+      child: Container(
       margin: EdgeInsets.symmetric(horizontal: 20.0, vertical: 5.0),
       padding: EdgeInsets.all(10.0),
       height: 140.0,
@@ -158,6 +166,7 @@ class _VideoPageState extends State<VideoPage> {
           )
         ],
       ),
+    ),
     );
   }
 }

@@ -135,17 +135,6 @@ List<DataItem> radioAPI = [
     'https://daniel.torontocast.com:2630/;'
   ),
   DataItem(
-    Text('FMうるま (FM Uruma)'),
-    Text(
-      '配信中',
-      style: TextStyle(fontStyle: FontStyle.italic)
-    ),
-    CircleAvatar(
-      backgroundImage: NetworkImage('https://static.mytuner.mobi/media/tvos_radios/sFcMxhmByx.jpg')
-    ),
-    'mms://hdv.nkansai.tv/fm-uruma'
-  ),
-  DataItem(
     Text('Japan-a-Radio 日本流行音樂與動畫卡通歌曲'),
     Text(
       '配信中',
@@ -188,17 +177,6 @@ List<DataItem> radioAPI = [
       backgroundImage: NetworkImage('https://static.mytuner.mobi/media/radios-150px/r8uhzyznrxlc.jpg')
     ),
     'https://streamer.radio.co/s83eb8ff39/listen'
-  ),
-  DataItem(
-    Text('Ghost Anime Radio'),
-    Text(
-      'Animeradio.su',
-      style: TextStyle(fontStyle: FontStyle.italic)
-    ),
-    CircleAvatar(
-      backgroundImage: NetworkImage('https://static.mytuner.mobi/media/tvos_radios/xb2GGJUGXE.png')
-    ),
-    'http://animeradio.su:8000/;'
   ),
   DataItem(
     Text('Ghost Anime Radio'),

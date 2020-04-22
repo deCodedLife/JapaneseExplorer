@@ -3,7 +3,8 @@ import 'dart:io';
 import 'package:http/http.dart';
 import '../Data/Channel.dart';
 import '../Data/Video.dart';
-import '../ApiKeys/keys.dart';
+// This programm should contain google API key (const YOUTUBE_KEY)
+import '../ApiKeys/keys.dart'; // I declare it there.
 
 class APIService {
 
@@ -19,7 +20,7 @@ class APIService {
       'playlistId' : playlistID,
       'maxResults' : '8',
       'pageToken' : _nextPageToken,
-      'key' : YOUTUBE_KEY,
+      'key' : YOUTUBE_KEY, // init key to continue
     };
     Uri uri = Uri.https(
       _baseUrl,

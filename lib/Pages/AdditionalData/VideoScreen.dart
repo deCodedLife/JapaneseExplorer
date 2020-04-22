@@ -28,7 +28,7 @@ class _VideoScreenState extends State<VideoScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-
+        title: Text(_controller.metadata.title)
       ),
       body: YoutubePlayer(
         controller: _controller,

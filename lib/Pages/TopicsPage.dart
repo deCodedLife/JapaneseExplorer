@@ -40,6 +40,7 @@ class TopicsPage extends StatelessWidget {
   Widget build(BuildContext context) {
     globalContext = context;
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       theme: ThemeData(
           primarySwatch: Colors.purple,
           buttonColor: Colors.purple,

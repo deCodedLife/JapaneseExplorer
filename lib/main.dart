@@ -1,12 +1,12 @@
-import 'Pages/RadioPage.dart';
-import 'Pages/CulturePage.dart';
-import 'Pages/StudyPage.dart';
-import 'Pages/TopicsPage.dart';
-import 'Pages/VideoPage.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter/material.dart';
 import 'Data/UserDB.dart';
 import 'Pages/MainPage.dart';
-import 'package:flutter/material.dart';
+import 'Pages/VideoPage.dart';
+import 'Pages/StudyPage.dart';
+import 'Pages/RadioPage.dart';
+import 'Pages/TopicsPage.dart';
+import 'Pages/CulturePage.dart';
 
 void main() async {
   runApp(

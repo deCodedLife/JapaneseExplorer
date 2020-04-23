@@ -11,12 +11,10 @@ Also we need to study for remember this words. For this I'll create "Games" whic
 
 If you want to listen native speakers you can listen radio. I'll add some radio streams in my programm. Also I'll add History, Geographic and Culture into my app. 
 
-<br/>
 <img src="preview/Radio 0.png" width="200" align="left"/>
 <img src="preview/Radio 1.png" width="200" align="left"/>
 <img src="preview/Videos.png" width="200" align="left"/>
 <img src="preview/VideoScreen.png" width="200"/>
-<br/>
 
 After all of this, I gues that I will help you with virtual travel in Japan. 
 Thanks for reading.

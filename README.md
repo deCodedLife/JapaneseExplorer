@@ -6,7 +6,7 @@ For example I'll Create "Topics" for words which you want to learn.
 <img src="preview/MainPage.png" width="200" align="left"/>
 <img src="preview/Add topic.png" width="200" align="left"/>
 <img src="preview/Words.png" width="200" align="left"/>
-<img src="preview/Words(choosen).png" width="190"/>
+<img src="preview/Words(choosen).png" width="200"/>
 <br/><div align="end"></div>
 Also we need to study for remember this words. For this I'll create "Games" which can make this proccess more easy. Also I'll make standart things like exams etc.
 

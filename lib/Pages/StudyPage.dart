@@ -13,7 +13,6 @@ class StudyPage extends StatefulWidget {
 
 class _StudyPage extends State<StudyPage> {
    
-
   List<ListTile> data = [
     ListTile(
       leading: Icon(Icons.border_all),
@@ -65,6 +64,7 @@ class _StudyPage extends State<StudyPage> {
 
   @override
   Widget build(BuildContext context) {
+    globalContext = context;
     return Scaffold(
       appBar: AppBar(
         title: Text('Learning new words'),

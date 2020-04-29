@@ -1,7 +1,7 @@
 import 'dart:math';
-
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:audioplayers/audioplayers.dart';
 import '../../Data/UserDB.dart' as DB;
 
 class ExamScreen extends StatefulWidget {
@@ -25,6 +25,7 @@ class _ExamScreenState extends State<ExamScreen> {
   bool loaded = false;
   bool tempLoaded = false;
   String userInput;
+  final AudioPlayer audioPlayer = AudioPlayer();
 
   @override
   Widget build(BuildContext context) {
@@ -98,11 +99,13 @@ class _ExamScreenState extends State<ExamScreen> {
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          Padding(padding: EdgeInsets.all(16.0), child: cardView(context)),
-          SizedBox(
-            height: 16.0,
+          Expanded(
+            child: Padding(
+                padding: EdgeInsets.all(16.0), child: cardView(context)),
           ),
-          Padding(padding: EdgeInsets.all(16.0), child: inputView(context))
+          Expanded(
+              child: Padding(
+                  padding: EdgeInsets.all(16.0), child: inputView(context))),
         ],
       ));
     else
@@ -119,10 +122,10 @@ class _ExamScreenState extends State<ExamScreen> {
   Widget cardView(BuildContext context) {
     return Container(
         child: GestureDetector(
-            onTap: () {},
-            child: Card(
-                child: Padding(
-                    padding: EdgeInsets.all(16.0), child: showContent()))));
+            onTap: () {
+              audioPlayer.play(tempSound.path);
+            },
+            child: Card(child: Center(child: showContent()))));
   }
 
   Widget inputView(BuildContext context) {
@@ -136,7 +139,6 @@ class _ExamScreenState extends State<ExamScreen> {
           },
           decoration: InputDecoration(
               labelText: 'Enter translation',
-              errorText: 'Cant be empty',
               hoverColor: Theme.of(context).primaryColor),
         ),
         Spacer(),
@@ -145,16 +147,18 @@ class _ExamScreenState extends State<ExamScreen> {
           child: Text('Sumbit'),
           onPressed: () {
             if (userInput.length != 0) {
-              if (tempWord.word == userInput) {
+              print(tempWord.translate + "\n" + userInput);
+              if (tempWord.translate == userInput) {
                 setState(() {
                   state = 1;
-                  Future.delayed(Duration(seconds: 3), () {
+                  print('hell yeah');
+                });
+                Future.delayed(Duration(seconds: 3), () {
                     setState(() {
                       state = 0;
                       tempLoaded = false;
                     });
                   });
-                });
               }
             }
           },
@@ -170,12 +174,13 @@ class _ExamScreenState extends State<ExamScreen> {
         Text(tempWord == null ? 'Loading' : tempWord.word,
             style: TextStyle(
               fontSize: 32,
-            )),
+            ),
+            textAlign: TextAlign.center),
         Spacer()
       ]);
     else if (state == 1)
-      return Icon(Icons.done, color: Colors.greenAccent, size: 32.0);
+      return Icon(Icons.done, color: Colors.greenAccent, size: 64.0);
     else
-      return Icon(Icons.clear, color: Colors.redAccent, size: 32.0);
+      return Icon(Icons.clear, color: Colors.redAccent, size: 64.0);
   }
 }

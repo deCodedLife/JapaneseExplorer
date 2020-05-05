@@ -51,15 +51,16 @@ class _ExamScreenState extends State<ExamScreen> {
   }
 
   _execute() {
-    var random = Random();
+    var random = new Random();
     int randomTopic;
     if (tempTopics.length > 1)
-      randomTopic = random.nextInt(tempTopics.length - 1);
+      randomTopic = random.nextInt(tempTopics.length);
     else
       randomTopic = 0;
+    print(randomTopic);
     var topicTask = wordsDao.getByTopic(tempTopics[randomTopic].id);
     topicTask.then((request) {
-      var randomWord = request.elementAt(random.nextInt(request.length - 1));
+      var randomWord = request.elementAt(random.nextInt(request.length));
       var imageTask = imagesDao.getByID(randomWord.id);
       imageTask.then((image) {
         var soundTask = soundsDao.getByID(randomWord.sound);
@@ -68,7 +69,6 @@ class _ExamScreenState extends State<ExamScreen> {
             tempWord = randomWord;
             tempImage = image;
             tempSound = sound;
-            print('eee boy');
           });
         });
       });
@@ -93,7 +93,7 @@ class _ExamScreenState extends State<ExamScreen> {
   }
 
   Widget buildMain() {
-    if (Orientation != Orientation.portrait)
+    if (MediaQuery.of(context).orientation != Orientation.landscape)
       return Container(
           child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
@@ -146,17 +146,30 @@ class _ExamScreenState extends State<ExamScreen> {
           textColor: Theme.of(context).primaryColor,
           child: Text('Sumbit'),
           onPressed: () {
-            if (userInput.length != 0) {
+            if (userInput.length != 0 && state == 0 ) {
               print(tempWord.translate + "\n" + userInput);
               if (tempWord.translate == userInput) {
                 setState(() {
                   state = 1;
-                  print('hell yeah');
                 });
+                state = 1;
                 Future.delayed(Duration(seconds: 3), () {
                     setState(() {
                       state = 0;
                       tempLoaded = false;
+                      _execute();
+                    });
+                  });
+              } else {
+                setState(() {
+                  state = 3;
+                });
+                state = 3;
+                Future.delayed(Duration(seconds: 3), () {
+                    setState(() {
+                      state = 0;
+                      tempLoaded = false;
+                      _execute();
                     });
                   });
               }

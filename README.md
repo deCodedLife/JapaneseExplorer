@@ -9,8 +9,10 @@ For example I'll Create "Topics" for words which you want to learn.
 
 Also we need to study for remember this words. For this I'll create "Games" which can make this proccess more easy. Also I'll make standart things like exams etc.
 
-<img src="preview/Exam.png" width="200" align="left"/>
-<img src="preview/Exam_correct.png" width="200"/>
+<img src="preview/Exam_correct.png" width="200" align="left"/>
+<img src="preview/Exam_false.png" width="200" align="left"/>
+<img src="preview/Compare_g.png" width="200" align="left"/>
+<img src="preview/Compare_r.png.png" width="200"/>
 
 If you want to listen native speakers you can listen radio. I'll add some radio streams in my programm. Also I'll add History, Geographic and Culture into my app. 
 

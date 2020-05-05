@@ -28,9 +28,7 @@ class _StudyPage extends State<StudyPage> {
             builder: (context) => MultiProvider(
               providers: [
                 Provider(create: (_) => UserDatabase().topicDao),
-                Provider(create: (_) => UserDatabase().wordDao),
-                Provider(create: (_) => UserDatabase().soundDao),
-                Provider(create: (_) => UserDatabase().imageDao)                
+                Provider(create: (_) => UserDatabase().wordDao),          
               ],
               child: CompareScreen(),
             )
